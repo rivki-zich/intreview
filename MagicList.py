@@ -1,16 +1,21 @@
+from dataclasses import dataclass
 
-class MagicList():
-    def __init__(self, cls_type):
-        self.list1 = list(cls_type)
+class Mylist(list):
 
+     def __init__(self, cls=int):
+          self.my_class = cls
+     def __setitem__(self, key, value):
+          self.append(self.my_class(value))
+     def __getattr__(self, item):
+          return self
 
-   def set(self, parameter):
-       if len(self.list1) == 1:
-           raise AssertionError('No Space In list')
-       else:
-           self.list1.append(parameter)
+@dataclass()
+class Person:
+     age: int = 1
+x = Mylist()
+x[0] = 5
+print(x)
 
-
-if __name__ == '__main__':
-    m = MagicList(cls_type=float)
-    print(m.list1)
+x = Mylist(Person)
+x[0] = 5
+print(x)
